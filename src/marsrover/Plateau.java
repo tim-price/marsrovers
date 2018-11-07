@@ -9,7 +9,7 @@ public class Plateau {
 		yMax = y;
 	}
 	
-	public Boolean IsCoordinateInBounds(int x, int y) {
+	public boolean isCoordinateInBounds(int x, int y) {
 		if ((x >= 0 && x <= xMax) && (y >= 0 && y <= yMax)) {
 			return true;
 		}		
