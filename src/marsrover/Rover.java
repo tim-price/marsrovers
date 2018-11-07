@@ -6,8 +6,8 @@ public class Rover {
     Location currentPos;
     Plateau plateau;
     
-	public Rover(int x, int y, Plateau p, String d) {
-		currentPos = new Location(new Point(x, y), Direction.fromString(d));
+	public Rover(Plateau p, Location l) {
+		currentPos = l;
 		plateau = p;
 	}
 	
