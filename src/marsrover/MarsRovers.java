@@ -1,8 +1,14 @@
 package marsrover;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class MarsRovers {
     Plateau plateau;
     InputParser ip;
+    BufferedReader reader;
+    FileReader file;
     
 	MarsRovers() {
 	}
@@ -10,12 +16,17 @@ public class MarsRovers {
 	void run() {
 		try {
 			Class cls = this.getClass();
-			ip = new InputParser(cls.getResource("input.txt").getPath());
-			Point topRight = ip.parseUpperRightCoordinates();
+			file = new FileReader(cls.getResource("input.txt").getPath());
+	    	reader = new BufferedReader(file);
+			ip = new InputParser();
+			String s = readLineAndValidate();
+			Point topRight = ip.parseUpperRightCoordinates(s);
 			plateau = new Plateau(topRight);
-			while (!ip.isEndOfFile()) {
-				Rover rover = new Rover(plateau, ip.parseRoverPosition());
-				char[] actions = ip.parseRoverActions();
+			while (!ip.isEndOfFile(reader)) {
+				s = readLineAndValidate();
+				Rover rover = new Rover(plateau, ip.parseRoverPosition(s));
+				s = readLineAndValidate();
+				char[] actions = ip.parseRoverActions(s);
 				for (char action : actions) {
 					switch(action) {
 						case 'L':
@@ -36,5 +47,11 @@ public class MarsRovers {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	String readLineAndValidate() {
+		String line = ip.readLineFromFile(reader);
+		ip.checkInputValid(line);
+		return line;
 	}
 }

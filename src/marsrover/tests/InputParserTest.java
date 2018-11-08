@@ -1,6 +1,9 @@
 package marsrover.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -15,19 +18,18 @@ class InputParserTest {
 
 	@Test
 	void testPlateauCoordinates() {
-		Class cls = this.getClass();
-		InputParser ip = new InputParser(cls.getResource("testinput.txt").getPath());
-		Point p = ip.parseUpperRightCoordinates();
+		InputParser ip = new InputParser();
+		String s = "5 5";
+		Point p = ip.parseUpperRightCoordinates(s);
 		assertEquals(5, p.getX());
 		assertEquals(5, p.getY());
 	}
 	
 	@Test
 	void testRoverPosition() {
-		Class cls = this.getClass();
-		InputParser ip = new InputParser(cls.getResource("testinput.txt").getPath());
-		ip.parseUpperRightCoordinates();
-		Location l = ip.parseRoverPosition();
+		InputParser ip = new InputParser();
+		String s = "1 2 N";
+		Location l = ip.parseRoverPosition(s);
 		assertEquals(1, l.getCoordinate().getX());
 		assertEquals(2, l.getCoordinate().getY());
 		assertEquals(Direction.NORTH, l.getOrientation());
@@ -35,30 +37,10 @@ class InputParserTest {
 	
 	@Test
 	void testRoverActions() {
-		Class cls = this.getClass();
-		InputParser ip = new InputParser(cls.getResource("testinput.txt").getPath());
-		ip.parseUpperRightCoordinates();
-		ip.parseRoverPosition();
-		char[] actions = ip.parseRoverActions();
+		InputParser ip = new InputParser();
+		String s ="LMLMLMLMM";
+		char[] actions = ip.parseRoverActions(s);
 		char[] expected = new char[] {'L', 'M', 'L', 'M', 'L', 'M', 'L', 'M', 'M'};
-		assertArrayEquals(expected, actions);
-	}
-	
-	@Test
-	void testMultipleRovers() {
-		Class cls = this.getClass();
-		InputParser ip = new InputParser(cls.getResource("testinput.txt").getPath());
-		ip.parseUpperRightCoordinates();
-		ip.parseRoverPosition();
-		ip.parseRoverActions();
-		
-		Location l = ip.parseRoverPosition();
-		assertEquals(3, l.getCoordinate().getX());
-		assertEquals(3, l.getCoordinate().getY());
-		assertEquals(Direction.EAST, l.getOrientation());
-		
-		char[] actions = ip.parseRoverActions();
-		char[] expected = new char[] {'M', 'M', 'R', 'M', 'M', 'R', 'M', 'R', 'R', 'M'};
 		assertArrayEquals(expected, actions);
 	}
 	
@@ -66,19 +48,30 @@ class InputParserTest {
 	void testEndOfFile() {
 		try {
 			Class cls = this.getClass();
-			InputParser ip = new InputParser(cls.getResource("testinput.txt").getPath());
-			ip.parseUpperRightCoordinates();
-			boolean result = ip.isEndOfFile();
+		    FileReader file = new FileReader(cls.getResource("testinput.txt").getPath());
+		    BufferedReader reader = new BufferedReader(file);
+		    InputParser ip = new InputParser();
+		    String line = ip.readLineFromFile(reader);
+			ip.checkInputValid(line);
+			boolean result = ip.isEndOfFile(reader);
 			assertFalse(result);
-			ip.parseRoverPosition();
-			ip.parseRoverActions();
+			line = ip.readLineFromFile(reader);
+			ip.checkInputValid(line);
+			ip.parseRoverPosition(line);
+			line = ip.readLineFromFile(reader);
+			ip.checkInputValid(line);
+			ip.parseRoverActions(line);
 			
-			result = ip.isEndOfFile();
+			result = ip.isEndOfFile(reader);
 			assertFalse(result);
 			
-			ip.parseRoverPosition();
-            ip.parseRoverActions();
-            result = ip.isEndOfFile();
+			line = ip.readLineFromFile(reader);
+			ip.checkInputValid(line);
+			ip.parseRoverPosition(line);
+			line = ip.readLineFromFile(reader);
+			ip.checkInputValid(line);
+            ip.parseRoverActions(line);
+            result = ip.isEndOfFile(reader);
             assertTrue(result);
             
 		} catch (IOException e) {
