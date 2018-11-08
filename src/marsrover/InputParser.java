@@ -21,7 +21,7 @@ public class InputParser {
     public Point parseUpperRightCoordinates() {
     	String firstLine = readLineFromFile();
     	checkInputValid(firstLine);
-    	String[] values = firstLine.split("/s");
+    	String[] values = firstLine.split("\\s+");
     	Point p = new Point(Integer.parseInt(values[0]), Integer.parseInt(values[1]));
     	return p;
     }
@@ -29,7 +29,7 @@ public class InputParser {
     public Location parseRoverPosition() {
     	String line = readLineFromFile();
     	checkInputValid(line);
-    	String[] values = line.split("/s");
+    	String[] values = line.split("\\s+");
     	Point p = new Point(Integer.parseInt(values[0]), Integer.parseInt(values[1]));
     	Location l = new Location(p, Direction.fromString(values[2]));
     	return l;
@@ -42,9 +42,9 @@ public class InputParser {
     }
     
     public boolean isEndOfFile() throws IOException {
-    	file.mark(1);
-        int i = file.read();
-        file.reset();
+    	reader.mark(1);
+        int i = reader.read();
+        reader.reset();
         return i < 0;
     }
     
