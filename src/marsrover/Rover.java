@@ -5,14 +5,17 @@ import java.util.EnumMap;
 public class Rover {
     Location currentPos;
     Plateau plateau;
+    EnumMap<Direction, Direction> leftTurnMap;
+    EnumMap<Direction, Direction> rightTurnMap;
     
 	public Rover(Plateau p, Location l) {
 		currentPos = l;
 		plateau = p;
+	    leftTurnMap = createLeftTurnMap();
+	    rightTurnMap = createRightTurnMap();
 	}
 	
 	public void turnLeft() {
-		EnumMap<Direction, Direction> leftTurnMap = createLeftTurnMap();
 		currentPos.setOrientation(leftTurnMap.get(currentPos.getOrientation()));
 	}
 
@@ -26,7 +29,6 @@ public class Rover {
 	}
 	
 	public void turnRight() {
-		EnumMap<Direction, Direction> rightTurnMap = createRightTurnMap();
 		currentPos.setOrientation(rightTurnMap.get(currentPos.getOrientation()));
 	}
 	
@@ -59,15 +61,19 @@ public class Rover {
 		    default:
 		    	break;
 		}
-		if (plateau.isCoordinateInBounds(newX, newY)) {
-			currentPos.getCoordinate().setX(newX);
-			currentPos.getCoordinate().setY(newY);
+		if (plateau.isPointInBounds(new Point(newX, newY))) {
+			setNewPosition(newX, newY);
 		} else {
 			throw new IllegalArgumentException();
 		}
 	}
+
+	private void setNewPosition(int newX, int newY) {
+		currentPos.getCoordinate().setX(newX);
+		currentPos.getCoordinate().setY(newY);
+	}
 	
-	public String outputLocation() {
+	public String getLocationAsString() {
 		return currentPos.toString();
 	}
 	
