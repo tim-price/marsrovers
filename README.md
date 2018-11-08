@@ -38,3 +38,5 @@ The following assumptions and design decisions have been made where the problem 
 * If the input doesn't match the structure defined in the problem statement an exception will be thrown
 * The source of the input was not specified, as such I have implemented it as a text file called "input.txt". If you wish to change the location, plateau size or instructions you only need to change this file.
 * The location of the output was not specified, I have implemented it to be printed to the console.
+
+This project was written using Eclipse. The build environment and JUnit integration are those provided with the Eclipse application.
