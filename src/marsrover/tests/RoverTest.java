@@ -13,7 +13,7 @@ class RoverTest {
 
 	@Test
 	void testCreate() {
-		Plateau p = new Plateau(5, 5);
+		Plateau p = new Plateau(new Point(5, 5));
 		Location l = new Location(new Point(2, 2), Direction.fromString("N"));
 		Rover rover = new Rover(p, l);
 		assertNotNull(rover);
@@ -21,7 +21,7 @@ class RoverTest {
 	
 	@Test
 	void testTurnLeft() {
-		Plateau p = new Plateau(5, 5);
+		Plateau p = new Plateau(new Point(5, 5));
 		Location l = new Location(new Point(2, 2), Direction.fromString("N"));
 		Rover rover = new Rover(p, l);
 		rover.turnLeft();
@@ -43,7 +43,7 @@ class RoverTest {
 	
 	@Test
 	void testTurnRight() {
-		Plateau p = new Plateau(5, 5);
+		Plateau p = new Plateau(new Point(5, 5));
 		Location l = new Location(new Point(3, 4), Direction.fromString("N"));
 		Rover rover = new Rover(p, l);
 		rover.turnRight();
@@ -65,7 +65,7 @@ class RoverTest {
 	
 	@Test
 	void testMoveNorth() {
-		Plateau p = new Plateau(5, 5);
+		Plateau p = new Plateau(new Point(5, 5));
 		Location l = new Location(new Point(3, 4), Direction.fromString("N"));
 		Rover rover = new Rover(p, l);
 		rover.move();
@@ -75,7 +75,7 @@ class RoverTest {
 	
 	@Test
 	void testMoveEast() {
-		Plateau p = new Plateau(5, 5);
+		Plateau p = new Plateau(new Point(5, 5));
 		Location l = new Location(new Point(3, 4), Direction.fromString("E"));
 		Rover rover = new Rover(p, l);
 		rover.move();
@@ -85,7 +85,7 @@ class RoverTest {
 	
 	@Test
 	void testMoveSouth() {
-		Plateau p = new Plateau(5, 5);
+		Plateau p = new Plateau(new Point(5, 5));
 		Location l = new Location(new Point(3, 4), Direction.fromString("S"));
 		Rover rover = new Rover(p, l);
 		rover.move();
@@ -95,7 +95,7 @@ class RoverTest {
 	
 	@Test
 	void testMoveWest() {
-		Plateau p = new Plateau(5, 5);
+		Plateau p = new Plateau(new Point(5, 5));
 		Location l = new Location(new Point(3, 4), Direction.fromString("W"));
 		Rover rover = new Rover(p, l);
 		rover.move();
